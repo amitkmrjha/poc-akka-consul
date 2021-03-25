@@ -23,11 +23,11 @@ class ConsulRegistry(consul: ConsulProcess) {
           .service(
             ImmutableService
               .builder()
-              .addTags(s"system:${serviceName}", "akka-management-port:8558")
+              .addTags(s"system:${serviceName}", s"akka-management-port:${form.port.getOrElse(0)}")
               .address(form.address)
               .id(form.id.getOrElse("NA"))
               .service(serviceName)
-              .port(1235)
+              .port(form.port.getOrElse(0))
               .build()
           )
           .node("testNode")

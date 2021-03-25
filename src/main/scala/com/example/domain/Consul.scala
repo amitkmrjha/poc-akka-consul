@@ -7,6 +7,7 @@ case class CatalogRegistrationForm(
                                   datacenter : Option[String] = None,
                                   node: String,
                                   address:String,
+                                  port: Option[Int] = None,
                                   //nodeMeta: Map[String,String] = Map.empty,
                                   taggedAddresses: Option[String] = None,
                                   service: Option[String] = None,

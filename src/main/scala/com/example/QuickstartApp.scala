@@ -9,7 +9,7 @@ import akka.http.scaladsl.server.Route
 import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.{actor => classic}
-import com.example.route.{TopLevelRoute, UserRoutes}
+import com.example.route.TopLevelRoute
 import com.pszymczyk.consul.{ConsulProcess, ConsulStarterBuilder}
 import com.typesafe.config.ConfigFactory
 
@@ -58,19 +58,12 @@ object QuickstartApp {
     val consulRegistry = new ConsulRegistry(consul)
 
     val rootBehavior = Behaviors.setup[Nothing] { context =>
-      val userRegistryActor = context.spawn(UserRegistry(), "UserRegistryActor")
-      context.watch(userRegistryActor)
       val consulDiscovery = new ConsulDiscovery()(context.system)
-
-
-      val routes = new TopLevelRoute(userRegistryActor,consulRegistry,consulDiscovery)(context.system)
+      val routes = new TopLevelRoute(consulRegistry,consulDiscovery)(context.system)
       startHttpServer(routes.route,httpPort)(context.system)
-
       Behaviors.empty
     }
-
-
-
+    
     val system = ActorSystem[Nothing](rootBehavior, "cluster-HelloAkka",complete)
 
     implicit val classicSystem: classic.ActorSystem = system.toClassic

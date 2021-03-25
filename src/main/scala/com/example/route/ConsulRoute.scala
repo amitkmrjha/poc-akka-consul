@@ -6,9 +6,8 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.util.Timeout
-import com.example.UserRegistry._
 import com.example.domain.{CatalogRegistrationForm, ConsulService, ConsulServices}
-import com.example.{ConsulDiscovery, ConsulRegistry, JsonFormats, User, UserRegistry, Users}
+import com.example.{ConsulDiscovery, ConsulRegistry, JsonFormats}
 
 import scala.concurrent.Future
 
